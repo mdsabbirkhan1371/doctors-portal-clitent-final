@@ -6,21 +6,21 @@ import phone from '../../assets/icons/phone.svg'
 
 const Info = () => {
     return (
-        <div class='grid grid-cols-1 lg:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-4'>
             <CardInfo
                 img={clock}
                 cardTitle={"Opening Hours"}
-                bgClass={'bg-gradient-to-r from-secondary to-primary'}
+                bgclassName={'bg-gradient-to-r from-secondary to-primary'}
             ></CardInfo>
             <CardInfo
                 img={marker}
                 cardTitle={"Visit Our Locations"}
-                bgClass={'bg-accent'}
+                bgclassName={'bg-accent'}
             ></CardInfo>
             <CardInfo
                 img={phone}
                 cardTitle={"Contact Us Now"}
-                bgClass={'bg-gradient-to-r from-secondary to-primary'}
+                bgclassName={'bg-gradient-to-r from-secondary to-primary'}
             ></CardInfo>
         </div>
     );

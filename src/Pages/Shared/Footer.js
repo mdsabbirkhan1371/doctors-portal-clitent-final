@@ -8,22 +8,22 @@ const Footer = () => {
             background: `url(${footer})`,
             backgroundSize: 'cover'
         }}>
-            <footer class="footer pl-24">
+            <footer className="pl-24 footer">
                 <div>
-                    <span class="footer-title">Services</span>
-                    <a class="link link-hover">Emergency Checkup</a>
-                    <a class="link link-hover">Weekly Checkup</a>
-                    <a class="link link-hover">Deeply Checkup</a>
+                    <span className="footer-title">Services</span>
+                    <a className="link link-hover">Emergency Checkup</a>
+                    <a className="link link-hover">Weekly Checkup</a>
+                    <a className="link link-hover">Deeply Checkup</a>
                 </div>
                 <div>
-                    <span class="footer-title">Our Health</span>
-                    <a class="link link-hover">Fluoride Treatment</a>
-                    <a class="link link-hover">Cavity Filling</a>
-                    <a class="link link-hover">Teath Whitening</a>
+                    <span className="footer-title">Our Health</span>
+                    <a className="link link-hover">Fluoride Treatment</a>
+                    <a className="link link-hover">Cavity Filling</a>
+                    <a className="link link-hover">Teath Whitening</a>
 
                 </div>
                 <div>
-                    <span class="footer-title">Our Address</span>
+                    <span className="footer-title">Our Address</span>
                     <h3>New York - 101010 Hudson</h3>
                 </div>
             </footer>
@@ -45,26 +45,26 @@ export default Footer;
 //     return (
 
 //         <section className='p-12'>
-//             <footer class="footer ml-24"
+//             <footer className="ml-24 footer"
 
 //             >
 
 //                 <div>
-//                     <span class="footer-title">Services</span>
-//                     <a class="link link-hover">Emergency Checkup</a>
-//                     <a class="link link-hover">Weekly Checkup</a>
-//                     <a class="link link-hover">Monthly Checkup</a>
-//                     <a class="link link-hover">Deeply Checkup</a>
+//                     <span className="footer-title">Services</span>
+//                     <a className="link link-hover">Emergency Checkup</a>
+//                     <a className="link link-hover">Weekly Checkup</a>
+//                     <a className="link link-hover">Monthly Checkup</a>
+//                     <a className="link link-hover">Deeply Checkup</a>
 //                 </div>
 //                 <div>
-//                     <span class="footer-title">Our Health</span>
-//                     <a class="link link-hover">Fluoride Treatment</a>
-//                     <a class="link link-hover">Cavity Filling</a>
-//                     <a class="link link-hover">Teath Whitening</a>
+//                     <span className="footer-title">Our Health</span>
+//                     <a className="link link-hover">Fluoride Treatment</a>
+//                     <a className="link link-hover">Cavity Filling</a>
+//                     <a className="link link-hover">Teath Whitening</a>
 
 //                 </div>
 //                 <div>
-//                     <span class="footer-title">Our Address</span>
+//                     <span className="footer-title">Our Address</span>
 //                     <h3>New York - 101010 Hudson</h3>
 //                 </div>
 

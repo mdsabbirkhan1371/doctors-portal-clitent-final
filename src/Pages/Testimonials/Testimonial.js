@@ -15,14 +15,14 @@ const Testimonial = () => {
             country: "california"
         },
         {
-            _id: 1,
+            _id: 2,
             name: "Winson Herry",
             review: '',
             img: people2,
             country: "california"
         },
         {
-            _id: 1,
+            _id: 3,
             name: "Winson Herry",
             review: '',
             img: people3,
