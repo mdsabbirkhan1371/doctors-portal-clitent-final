@@ -1,12 +1,16 @@
 import React from 'react';
-
+import footer from '../../assets/images/footer.png'
 const Footer = () => {
     const today = new Date();
     const year = today.getFullYear();
     return (
-        <section className='p-12'>
+        <section className='p-12' style={{
+            background: `url(${footer})`,
+            backgroundSize: 'cover'
+        }}>
             <footer class="footer pl-24">
                 <div>
+                    <span class="footer-title">Services</span>
                     <a class="link link-hover">Emergency Checkup</a>
                     <a class="link link-hover">Weekly Checkup</a>
                     <a class="link link-hover">Deeply Checkup</a>
