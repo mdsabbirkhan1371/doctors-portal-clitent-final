@@ -29,7 +29,7 @@ const Footer = () => {
             </footer>
             <div className='my-12 text-xl text-center'>
                 <p>
-                    <small>Copywrite © {year} Name</small>
+                    <small>Copywrite © {year}-All Rights Reserved By Doctors Portal</small>
                 </p>
             </div>
         </section>
