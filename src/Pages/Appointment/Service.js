@@ -1,7 +1,7 @@
 import { sl } from 'date-fns/locale';
 import React from 'react';
 
-const Service = ({ service }) => {
+const Service = ({ service, setTreatment }) => {
     const { name, slots } = service;
     return (
 
@@ -23,7 +23,12 @@ const Service = ({ service }) => {
                     {slots.length}{slots.length > 1 ? 'spaces' : 'space'} available
                 </p>
                 <div class="card-actions justify-center">
-                    <button disabled={slots.length === 0} class="btn btn-secondary uppercase text-white">Booking Appointment</button>
+                    <label
+                        for="booking-modal"
+                        class="btn modal-button btn btn-secondary uppercase text-white"
+                        disabled={slots.length === 0}
+                        onClick={() => setTreatment(service)}
+                    >Booking Appointment</label>
                 </div>
             </div>
         </div>
