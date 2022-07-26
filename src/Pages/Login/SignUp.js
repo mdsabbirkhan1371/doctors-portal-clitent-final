@@ -1,13 +1,11 @@
-
 import React from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
 
-const Login = () => {
-
+const SignUp = () => {
     // sign in google 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
 
@@ -16,45 +14,81 @@ const Login = () => {
 
     // sign in with email and password 
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth);
 
-    // for requre auth 
+    // update profile 
+    const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
+
     const navigate = useNavigate()
-    const location = useLocation();
-    let from = location.state?.from?.pathname || "/";
 
     let signInError;
 
-    if (error || gError) {
-        signInError = <p className='text-red-500'><small>{error?.message || gError?.message}</small></p>
+    if (error || gError || updatingError) {
+        signInError = <p className='text-red-500'><small>{error?.message || gError?.message || updatingError?.message}</small></p>
     }
-    if (loading || gLoading) {
+    if (loading || gLoading || updating) {
         return <Loading></Loading>
     }
 
     if (gUser || user) {
-        navigate(from, { replace: true });
+        console.log(user, gUser)
     }
     // from react hooks form 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
-        signInWithEmailAndPassword(data.email, data.password)
+        const { name, email, password } = data;
+        await createUserWithEmailAndPassword(email, password)
+        await updateProfile({ displayName: name })
+        console.log("update done")
+        navigate('/appointment')
 
     }
     return (
         <div className='flex items-center justify-center h-screen'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="text-center text-2xl font-bold">Login</h2>
+                    <h2 className="text-center text-2xl font-bold">Sign Up</h2>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
 
-                        {/* email input field */}
 
+                        {/* name input field  */}
+
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="name"
+                                className="input input-bordered w-full max-w-xs"
+
+                                {...register("name", {
+                                    required: {
+                                        value: true,
+                                        message: "Name is required"
+                                    },
+                                    pattern: {
+
+                                        message: 'Provide a valid email address'
+                                    }
+                                })}
+
+                            />
+
+                            {/* showing error  */}
+
+                            <label className="label">
+                                {errors.name?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.name.message}</span>}
+                            </label>
+
+                        </div>
+
+                        {/* email input field */}
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text">Email</span>
@@ -123,8 +157,8 @@ const Login = () => {
 
                         {signInError}
 
-                        <input type="submit" value="Login" className="input input-bordered w-full max-w-xs bg-accent text-white" />
-                        <p><small>New to doctors portal?<Link className='ml-2 text-secondary' to="/signup">Create new account</Link></small></p>
+                        <input type="submit" value="Sign Up" className="input input-bordered w-full max-w-xs bg-accent text-white" />
+                        <p><small>Already have an account?<Link className='ml-2 text-secondary' to="/login">login please here</Link></small></p>
 
                     </form>
 
@@ -142,4 +176,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
