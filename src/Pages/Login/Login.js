@@ -1,15 +1,22 @@
 
-import React from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { async } from '@firebase/util';
+
+import React, { useRef } from 'react';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 const Login = () => {
 
     // sign in google 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+
+
 
     // from react form hook 
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -21,6 +28,12 @@ const Login = () => {
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
+
+    const [sendPasswordResetEmail, sending, errorPassword] = useSendPasswordResetEmail(
+        auth
+    );
+    // for reset password 
+    const emailRef = useRef()
 
     // for requre auth 
     const navigate = useNavigate()
@@ -39,30 +52,49 @@ const Login = () => {
     if (gUser || user) {
         navigate(from, { replace: true });
     }
+
+
     // from react hooks form 
     const onSubmit = (data) => {
         console.log(data);
         signInWithEmailAndPassword(data.email, data.password)
 
     }
+    const resetPassword = async () => {
+        const email = emailRef.current.value;
+
+        if (email) {
+            await sendPasswordResetEmail(email)
+            toast('sent email')
+        }
+        else {
+            toast('Please Enter Your Email')
+        }
+
+    }
+
+
     return (
         <div className='flex items-center justify-center h-screen'>
-            <div className="card w-96 bg-base-100 shadow-xl">
+            <div className="shadow-xl card w-96 bg-base-100">
                 <div className="card-body">
-                    <h2 className="text-center text-2xl font-bold">Login</h2>
+                    <h2 className="text-2xl font-bold text-center">Login</h2>
+
+
 
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         {/* email input field */}
 
-                        <div className="form-control w-full max-w-xs">
+                        <div className="w-full max-w-xs form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
                             <input
+
                                 type="text"
                                 placeholder="email"
-                                className="input input-bordered w-full max-w-xs"
+                                className="w-full max-w-xs input input-bordered email-input"
 
                                 {...register("email", {
                                     required: {
@@ -74,6 +106,7 @@ const Login = () => {
                                         message: 'Provide a valid email address'
                                     }
                                 })}
+                                ref={emailRef}
 
                             />
 
@@ -108,6 +141,7 @@ const Login = () => {
                                         message: 'Password must be 6 characters or longer'
                                     }
                                 })}
+
                             />
 
                             {/* showing error  */}
@@ -116,17 +150,21 @@ const Login = () => {
                                 {errors.password?.type === 'required' && <span className="text-red-500 label-text-alt">{errors.password.message}</span>}
                                 {errors.password?.type === 'minLength' && <span className="text-red-500 label-text-alt">{errors.password.message}</span>}
                             </label>
+
                         </div>
+
 
                         {/* login submit field  */}
 
 
+                        <p className='mb-5 cursor-pointer' onClick={resetPassword}><small>Forget Password?</small></p>
                         {signInError}
 
-                        <input type="submit" value="Login" className="input input-bordered w-full max-w-xs bg-accent text-white" />
+                        <input type="submit" value="Login" className="w-full max-w-xs text-white input input-bordered bg-accent" />
                         <p><small>New to doctors portal?<Link className='ml-2 text-secondary' to="/signup">Create new account</Link></small></p>
 
                     </form>
+                    <ToastContainer />
 
                     <div className="divider">OR</div>
 

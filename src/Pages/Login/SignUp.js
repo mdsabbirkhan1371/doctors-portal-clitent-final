@@ -18,7 +18,7 @@ const SignUp = () => {
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
     // update profile 
     const [updateProfile, updating, updatingError] = useUpdateProfile(auth);
@@ -49,23 +49,23 @@ const SignUp = () => {
     }
     return (
         <div className='flex items-center justify-center h-screen'>
-            <div className="card w-96 bg-base-100 shadow-xl">
+            <div className="shadow-xl card w-96 bg-base-100">
                 <div className="card-body">
-                    <h2 className="text-center text-2xl font-bold">Sign Up</h2>
+                    <h2 className="text-2xl font-bold text-center">Sign Up</h2>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
 
 
                         {/* name input field  */}
 
-                        <div className="form-control w-full max-w-xs">
+                        <div className="w-full max-w-xs form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
                             <input
                                 type="text"
                                 placeholder="name"
-                                className="input input-bordered w-full max-w-xs"
+                                className="w-full max-w-xs input input-bordered"
 
                                 {...register("name", {
                                     required: {
@@ -89,14 +89,14 @@ const SignUp = () => {
                         </div>
 
                         {/* email input field */}
-                        <div className="form-control w-full max-w-xs">
+                        <div className="w-full max-w-xs form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
                             <input
                                 type="text"
                                 placeholder="email"
-                                className="input input-bordered w-full max-w-xs"
+                                className="w-full max-w-xs input input-bordered"
 
                                 {...register("email", {
                                     required: {
@@ -157,7 +157,7 @@ const SignUp = () => {
 
                         {signInError}
 
-                        <input type="submit" value="Sign Up" className="input input-bordered w-full max-w-xs bg-accent text-white" />
+                        <input type="submit" value="Sign Up" className="w-full max-w-xs text-white input input-bordered bg-accent" />
                         <p><small>Already have an account?<Link className='ml-2 text-secondary' to="/login">login please here</Link></small></p>
 
                     </form>
