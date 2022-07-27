@@ -1,18 +1,52 @@
 import { format } from 'date-fns';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
 const BookingModal = ({ treatment, date, setTreatment }) => {
 
     const { _id, name, slots } = treatment;
     const [user, loading] = useAuthState(auth)
-
+    const formatDate = format(date, "PP")
     const handleForm = (event) => {
         event.preventDefault()
         const slot = event.target.slot.value;
         // console.log(name, _id, slot)
-        setTreatment(null)
+
+        const booking = {
+            treatmentId: _id,
+            treatment: name,
+            date: formatDate,
+            slot,
+            patient: user.email,
+            patientName: user.displayName,
+            phone: event.target.phone.value
+        }
+
+        fetch("http://localhost:5000/booking", {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(booking),
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+
+                if (data.success) {
+                    toast(`Appointment is set ${formatDate} at ${slot}`)
+                }
+                else {
+                    toast.error(`Allready have a appointment on ${data.booking?.date} at ${data.booking?.slot}`)
+                }
+                // to close modal 
+                setTreatment(null)
+            })
+
+
     }
     return (
         <div>
@@ -30,12 +64,6 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
                                     key={index}
                                 >{slot}</option>)
                             }
-                            {/* {
-                                slots.map((slot, index) => <option
-                                    key={index}
-                                    value={slot}
-                                >{slot}</option>)
-                            } */}
                         </select>
                         <input type="text" name='name' disabled value={user.displayName} className="w-full max-w-xs input input-bordered input-accent" />
 

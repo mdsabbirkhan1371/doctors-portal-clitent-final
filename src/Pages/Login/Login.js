@@ -1,17 +1,21 @@
 
 import { async } from '@firebase/util';
 
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../Shared/Loading';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sendPasswordResetEmail } from 'firebase/auth';
 
 const Login = () => {
+
+    // for reset password 
+
+    const [email, setEmail] = useState('')
 
     // sign in google 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -32,8 +36,6 @@ const Login = () => {
     const [sendPasswordResetEmail, sending, errorPassword] = useSendPasswordResetEmail(
         auth
     );
-    // for reset password 
-    const emailRef = useRef()
 
     // for requre auth 
     const navigate = useNavigate()
@@ -58,10 +60,9 @@ const Login = () => {
     const onSubmit = (data) => {
         console.log(data);
         signInWithEmailAndPassword(data.email, data.password)
-
     }
+
     const resetPassword = async () => {
-        const email = emailRef.current.value;
 
         if (email) {
             await sendPasswordResetEmail(email)
@@ -80,8 +81,6 @@ const Login = () => {
                 <div className="card-body">
                     <h2 className="text-2xl font-bold text-center">Login</h2>
 
-
-
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         {/* email input field */}
@@ -91,8 +90,10 @@ const Login = () => {
                                 <span className="label-text">Email</span>
                             </label>
                             <input
-
-                                type="text"
+                                onChange={(e) => {
+                                    setEmail(e.target.value)
+                                }}
+                                type="email"
                                 placeholder="email"
                                 className="w-full max-w-xs input input-bordered email-input"
 
@@ -106,7 +107,6 @@ const Login = () => {
                                         message: 'Provide a valid email address'
                                     }
                                 })}
-                                ref={emailRef}
 
                             />
 
@@ -164,7 +164,7 @@ const Login = () => {
                         <p><small>New to doctors portal?<Link className='ml-2 text-secondary' to="/signup">Create new account</Link></small></p>
 
                     </form>
-                    <ToastContainer />
+                    {/* <ToastContainer /> */}
 
                     <div className="divider">OR</div>
 
