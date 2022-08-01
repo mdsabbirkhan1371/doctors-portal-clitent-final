@@ -39,8 +39,8 @@ const My_Users = () => {
             <h3 className='my-10 font-bold text-center text-green-500'>My All Users: {users.length}</h3>
 
 
-            <div class="overflow-x-auto">
-                <table class="table w-full">
+            <div className="overflow-x-auto">
+                <table className="table w-full">
 
                     <thead>
                         <tr>
