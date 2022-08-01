@@ -5,7 +5,7 @@ import UsersRow from './UsersRow';
 const My_Users = () => {
 
     // for react query 
-    // const { data: users, isLoading, refetch } = useQuery('users', () => fetch('http://localhost:5000/user', {
+    // const { data: users, isLoading, refetch } = useQuery('users', () => fetch('https://my-docorts-portal-site.herokuapp.com/user', {
     //     method: 'GET',
     //     headers: {
     //         authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -18,7 +18,7 @@ const My_Users = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/user', {
+        fetch('https://my-docorts-portal-site.herokuapp.com/user', {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

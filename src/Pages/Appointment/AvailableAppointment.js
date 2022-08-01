@@ -13,7 +13,7 @@ const AvailableAppointment = ({ date }) => {
 
     // const { data: services, isLoading } = useQuery('available', () =>
 
-    //     fetch(`http://localhost:5000/available?date=${formattedDate}`)
+    //     fetch(`https://my-docorts-portal-site.herokuapp.com/available?date=${formattedDate}`)
     //         .then(res => res.json())
     // )
 
@@ -25,7 +25,7 @@ const AvailableAppointment = ({ date }) => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/available?date=${formattedDate}`)
+        fetch(`https://my-docorts-portal-site.herokuapp.com/available?date=${formattedDate}`)
             .then(res => res.json())
             .then(data => setServices(data))
     }, [formattedDate]);
