@@ -1,7 +1,7 @@
 
 import { async } from '@firebase/util';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -10,12 +10,13 @@ import Loading from '../Shared/Loading';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { sendPasswordResetEmail } from 'firebase/auth';
+import useToken from '../../hooks/useToken';
 
 const Login = () => {
 
     // for reset password 
 
-    const [email, setEmail] = useState('')
+
 
     // sign in google 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -40,7 +41,15 @@ const Login = () => {
     // for requre auth 
     const navigate = useNavigate()
     const location = useLocation();
+    const [token] = useToken(user || gUser)
+    const [email, setEmail] = useState('')
     let from = location.state?.from?.pathname || "/";
+
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true });
+        }
+    }, [token, from, navigate])
 
     let signInError;
 
@@ -51,14 +60,9 @@ const Login = () => {
         return <Loading></Loading>
     }
 
-    if (gUser || user) {
-        navigate(from, { replace: true });
-    }
-
-
     // from react hooks form 
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
         signInWithEmailAndPassword(data.email, data.password)
     }
 
