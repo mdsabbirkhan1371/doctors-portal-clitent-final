@@ -10,7 +10,6 @@ const My_Appointment = () => {
     const [appointments, setAppointments] = useState([]);
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
-
     useEffect(() => {
         if (user) {
             fetch(`https://my-docorts-portal-site.herokuapp.com/booking?patient=${user.email}`, {
