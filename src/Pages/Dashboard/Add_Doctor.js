@@ -26,7 +26,7 @@ const Add_Doctor = () => {
         fetch('http://localhost:5000/service')
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 setServices(data)
 
             })
@@ -34,7 +34,7 @@ const Add_Doctor = () => {
     let signInError;
     // from react hooks form 
     const onSubmit = async (data) => {
-        console.log(data)
+        // console.log(data)
 
         const image = data.image[0];
         const formData = new FormData();
@@ -66,11 +66,10 @@ const Add_Doctor = () => {
                     })
                         .then(res => res.json())
                         .then(inserted => {
-                            console.log('doctor', inserted)
+                            // console.log('doctor', inserted)
                             if (inserted.insertedId) {
                                 toast.success("Doctor Added Successfully");
-                                reset();
-
+                                reset()
                             }
                             else {
                                 toast.error("Doctor is not added")
