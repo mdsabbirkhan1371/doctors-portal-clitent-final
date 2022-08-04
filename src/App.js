@@ -18,6 +18,7 @@ import My_Users from './Pages/Dashboard/My_Users';
 import RequireAdmin from './Pages/Login/RequireAdmin';
 import Add_Doctor from './Pages/Dashboard/Add_Doctor';
 import ManageDoctors from './Pages/Dashboard/ManageDoctors';
+import Payment from './Pages/Dashboard/Payment';
 
 
 
@@ -42,6 +43,7 @@ function App() {
           <Route index element={<My_Appointment />} />
           <Route path="review" element={<My_Review />} />
           <Route path="history" element={<My_History />} />
+          <Route path="booking/:id" element={<Payment></Payment>} />
           <Route path="users" element={<RequireAdmin><My_Users /></RequireAdmin>} />
           <Route path="addoctor" element={<RequireAdmin><Add_Doctor /></RequireAdmin>} />
           <Route path="manageDoctor" element={<RequireAdmin><ManageDoctors /></RequireAdmin>} />
