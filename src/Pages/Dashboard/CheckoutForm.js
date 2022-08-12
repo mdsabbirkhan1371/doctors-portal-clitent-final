@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { async } from '@firebase/util';
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
+    const [cardError, setCardError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -14,6 +15,14 @@ const CheckoutForm = () => {
         if (card == null) {
             return;
         }
+
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card
+        });
+
+        setCardError(error?.message || '')
+
     }
     return (
 
@@ -39,6 +48,9 @@ const CheckoutForm = () => {
                     Pay
                 </button>
             </form>
+            {
+                cardError && <p className='text-red-500'>{cardError}</p>
+            }
         </div>
     );
 };
