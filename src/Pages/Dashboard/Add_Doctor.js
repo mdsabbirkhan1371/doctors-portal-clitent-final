@@ -23,7 +23,7 @@ const Add_Doctor = () => {
     const [services, setServices] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/service')
+        fetch('https://my-docorts-portal-site.herokuapp.com/service')
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
@@ -55,7 +55,7 @@ const Add_Doctor = () => {
                         img: img
                     }
                     // send your data base img file 
-                    fetch('http://localhost:5000/doctor', {
+                    fetch('https://my-docorts-portal-site.herokuapp.com/doctor', {
                         method: "POST",
                         headers: {
                             "content-type": "application/json",

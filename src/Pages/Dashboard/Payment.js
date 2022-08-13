@@ -4,11 +4,9 @@ import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from './CheckoutForm';
 import { Elements } from '@stripe/react-stripe-js'
 const Payment = () => {
-
+    const [appointment, setAppointment] = useState({})
     const { id } = useParams();
-    const url = `http://localhost:5000/booking/${id}`
-    const [appointments, setAppointments] = useState([])
-    const { patientName, treatment, date, price, slot } = appointments;
+    const url = `https://my-docorts-portal-site.herokuapp.com/booking/${id}`
 
     // for payment from stripe
     const stripePromise = loadStripe("pk_test_51LT9ImKwbZpCV7BW5R7E4wl5LbYqk0Q0Y0quvIMizOsBbqGjU3Ovsm8HGXBdkpOjY359F1l1Yu8KdnTSYJPlAopu00zGBGBvxB");
@@ -21,8 +19,12 @@ const Payment = () => {
             }
         })
             .then(res => res.json())
-            .then(data => setAppointments(data))
-    }, []);
+            .then(data => {
+                setAppointment(data)
+            })
+    }, [url]);
+
+    const { patientName, treatment, date, price, slot } = appointment;
 
     return (
         <div>
@@ -41,9 +43,9 @@ const Payment = () => {
 
             <div className='flex-shrink max-w-md shadow-2xl card w-50 bg-base-100'>
                 <div className='card-body'>
-                    <Elements stripe={stripePromise}>
-                        <CheckoutForm />
-                    </Elements>
+                    {appointment.price && <Elements stripe={stripePromise}>
+                        <CheckoutForm appointment={appointment} />
+                    </Elements>}
                 </div>
             </div>
 

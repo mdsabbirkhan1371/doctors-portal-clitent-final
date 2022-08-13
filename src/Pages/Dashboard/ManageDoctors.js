@@ -8,7 +8,7 @@ const ManageDoctors = () => {
     const [deleteDoctor, setdeleteDoctor] = useState(null)
 
     useEffect(() => {
-        fetch('http://localhost:5000/doctor', {
+        fetch('https://my-docorts-portal-site.herokuapp.com/doctor', {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
